@@ -1,0 +1,46 @@
+# Entorno virtual
+.venv/
+env/
+ENV/
+venv/
+VENV/
+*.env
+
+# Archivos Python bytecode
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Archivos de logs y bases de datos temporales
+*.log
+*.sqlite3
+*.db
+
+# Archivos de configuración del editor/IDE
+.vscode/
+.idea/
+*.sublime-workspace
+*.sublime-project
+
+# Archivos temporales del sistema
+.DS_Store
+Thumbs.db
+
+# Archivos de tests
+.coverage
+.tox/
+nosetests.xml
+test-results/
+htmlcov/
+
+# Paquetes Python compilados
+build/
+dist/
+*.egg-info/
+.eggs/
+
+
+# Configuración personal
+*.bak
+*.swp
+*.tmp
