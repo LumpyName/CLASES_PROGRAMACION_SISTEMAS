@@ -48,12 +48,12 @@ class NucleoPrograma:
     def calcular_imc(self, notificacion_error: function, mostrar_resultados: function):
         if all([self.persona, self.peso, self.altura]):
             mostrar_resultados(
-                persona=self.persona, peso=self.peso, altura=self.altura
+                persona=self.persona, imc=round(self.peso / (self.altura)**2, 2)
             )
             return
 
         notificacion_error(
             persona=self.persona, peso=self.peso, altura=self.altura
         )
-
         return
+
