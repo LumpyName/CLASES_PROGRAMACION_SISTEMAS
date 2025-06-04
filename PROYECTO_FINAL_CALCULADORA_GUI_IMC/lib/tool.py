@@ -30,8 +30,7 @@ class NucleoPrograma:
         self.altura = None
     
     def tipo_persona(self, persona):
-        if persona in ["adultos", "ninos", "ninas"]:
-            self.persona = persona
+        self.persona = persona
     
     def el_peso(self, peso):
         try:
@@ -56,4 +55,3 @@ class NucleoPrograma:
             persona=self.persona, peso=self.peso, altura=self.altura
         )
         return
-
