@@ -1,3 +1,5 @@
+import tkinter as tk
+
 def formatear_numero(num: float) -> float:
     """
     Formatea un número según las siguientes reglas:
