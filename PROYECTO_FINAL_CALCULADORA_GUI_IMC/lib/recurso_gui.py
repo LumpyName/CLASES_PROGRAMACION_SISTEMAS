@@ -1,32 +1,42 @@
 import tkinter as tk
 
 class FrameTipePerson(tk.Frame):
-    def __init__(self, master=None, **kwargs):
+    def __init__(self, master=None, receptor_of_tipo_person: callable = None, **kwargs):
         super().__init__(master, padx=10, pady=10, **kwargs)
+        
+        # Verificando si el parametro "receptor_of_tipo_person" es una funcion
+        if not callable(receptor_of_tipo_person):
+            raise ValueError("El parametro 'receptor_of_tipo_person' tiene que ser una funcion")
 
         # Para el flujo de datos de 
         self.selection_tipo = tk.StringVar()
         
         # Label y Radiobutton para "Adultos"
-        adultos_label = tk.Label(self, text="Adultos")
-        adultos_label.grid(row=0, column=0, padx=5, pady=5, sticky="w")
-        adultos_check = tk.Radiobutton(self, variable=self.selection_tipo, value="Adultos")
-        adultos_check.grid(row=0, column=1, padx=5, pady=5)
+        self.adultos_label = tk.Label(self, text="Adultos")
+        self.adultos_label.grid(row=0, column=0, padx=5, pady=5, sticky="w")
+        self.adultos_check = tk.Radiobutton(
+            self, variable=self.selection_tipo, 
+            command=lambda: receptor_of_tipo_person("Adulto")
+        )
+        self.adultos_check.grid(row=0, column=1, padx=5, pady=5)
         
         # Label y Radiobutton para "Niñas"
-        ninas_label = tk.Label(self, text="Niñas")
-        ninas_label.grid(row=1, column=0, padx=5, pady=5, sticky="w")
-        ninas_check = tk.Radiobutton(self, variable=self.selection_tipo, value="Niña")
-        ninas_check.grid(row=1, column=1, padx=5, pady=5)
+        self.ninas_label = tk.Label(self, text="Niñas")
+        self.ninas_label.grid(row=1, column=0, padx=5, pady=5, sticky="w")
+        self.ninas_check = tk.Radiobutton(
+            self, variable=self.selection_tipo, 
+            command=lambda: receptor_of_tipo_person("Niñas")
+        )
+        self.ninas_check.grid(row=1, column=1, padx=5, pady=5)
         
         # Label y Radiobutton para "Niños"
-        ninos_label = tk.Label(self, text="Niños")
-        ninos_label.grid(row=2, column=0, padx=5, pady=5, sticky="w")
-        ninos_check = tk.Radiobutton(self, variable=self.selection_tipo, value="Niño")
-        ninos_check.grid(row=2, column=1, padx=5, pady=5)
-
-        self.selection_tipo.set("None")
-
+        self.ninos_label = tk.Label(self, text="Niños")
+        self.ninos_label.grid(row=2, column=0, padx=5, pady=5, sticky="w")
+        self.ninos_check = tk.Radiobutton(
+            self, variable=self.selection_tipo, 
+            command=lambda: receptor_of_tipo_person("Niños")
+        )
+        self.ninos_check.grid(row=2, column=1, padx=5, pady=5)
 
 
 class FrameDatos(tk.Frame):
@@ -68,6 +78,10 @@ class MostrarIMC(tk.Frame):
         self.imc_box = tk.Label(self, text="IMC Calculado", relief="solid", width=20, height=3, justify="center")
         self.imc_box.grid(row=1, column=1, pady=15, padx=5)
 
-    def actualizar_imc(self, valor):
+    def actualizar_imc(self, tipe_person, valor):
         """Actualiza el texto mostrado en la caja del IMC"""
-        self.imc_box.config(text=valor)
+        # self.imc_box.config(text=valor)
+        print(f""""
+            Persona: {tipe_person}
+            IMC    : {valor}
+        """)

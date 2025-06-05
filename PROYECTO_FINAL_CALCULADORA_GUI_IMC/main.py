@@ -2,6 +2,8 @@ import tkinter as tk
 
 import lib.recurso_gui as gui_user
 
+from lib.tool import NucleoPrograma
+
 # Crear la ventana principal
 root = tk.Tk()
 root.title("Formulario Básico")

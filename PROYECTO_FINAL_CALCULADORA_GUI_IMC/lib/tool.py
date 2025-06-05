@@ -1,6 +1,6 @@
-import tkinter as tk
+"""Herramientas necesarias para la APP"""
 
-def formatear_numero(num: float) -> float:
+def _formatear_numero(num: float) -> float:
     """
     Formatea un número según las siguientes reglas:
     - Si tiene decimales, muestra hasta 3 decimales.
@@ -34,19 +34,26 @@ class NucleoPrograma:
     def tipo_persona(self, persona):
         self.persona = persona
     
-    def el_peso(self, peso):
+    def __el_peso(self, peso):
         try:
-            self.peso = formatear_numero(float(peso))
+            self.peso = _formatear_numero(float(peso))
         except ValueError:
             self.peso = None
 
-    def la_altura(self, altura):
+    def __la_altura(self, altura):
         try:
-            self.altura = formatear_numero(float(altura))
+            self.altura = _formatear_numero(float(altura))
         except ValueError:
             self.altura = None
     
-    def calcular_imc(self, notificacion_error: function, mostrar_resultados: function):
+    def calcular_imc(
+            self, get_peso:callable, get_altura:callable,
+            notificacion_error:callable, mostrar_resultados:callable
+        ):
+        # Obteniendo el peso y su estatura
+        self.__el_peso(get_peso())
+        self.__la_altura(get_altura())
+
         if all([self.persona, self.peso, self.altura]):
             mostrar_resultados(
                 persona=self.persona, imc=round(self.peso / (self.altura)**2, 2)
