@@ -26,13 +26,13 @@ class Rangos:
 class NucleoPrograma:
 
     def __init__(self):
-        self.persona = None
+        self.__persona = None
 
         self.peso = None
         self.altura = None
     
     def tipo_persona(self, persona):
-        self.persona = persona
+        self.__persona = persona
     
     def __el_peso(self, peso):
         try:
@@ -48,19 +48,45 @@ class NucleoPrograma:
     
     def calcular_imc(
             self, get_peso:callable, get_altura:callable,
-            notificacion_error:callable, mostrar_resultados:callable
+            notificacion_error:callable, mostrar_resultados:callable,
+            clasificado:callable
         ):
+        """
+    Parámetros:
+        Calcula el IMC utilizando funciones externas para obtener datos y mostrar resultados.
+
+        get_peso (callable): Función que retorna el peso como número flotante.
+
+        get_altura (callable): Función que retorna la altura como número flotante.
+
+        notificacion_error (callable): Se le pasan tres argumentos nombrados:
+            - persona (str or None)
+            - peso (float or None)
+            - altura (float or None)
+
+        mostrar_resultados (callable): Se le pasan tres argumentos nombrados:
+            - persona (str)
+            - valor_imc (float)
+            - clasificado_imc (str)
+
+        clasificado (callable): Se le pasan dos argumentos posicionales:
+            - persona (str)
+            - IMC (float)
+        """
+
         # Obteniendo el peso y su estatura
         self.__el_peso(get_peso())
         self.__la_altura(get_altura())
 
-        if all([self.persona, self.peso, self.altura]):
+        IMC = round(self.peso / (self.altura)**2, 2)
+        if all([self.__persona, self.peso, self.altura]):
             mostrar_resultados(
-                persona=self.persona, imc=round(self.peso / (self.altura)**2, 2)
+                persona=self.__persona, valor_imc=IMC,
+                clasificado_imc=clasificado(self.__persona, IMC)
             )
             return
 
         notificacion_error(
-            persona=self.persona, peso=self.peso, altura=self.altura
+            persona=self.__persona, peso=self.peso, altura=self.altura
         )
         return

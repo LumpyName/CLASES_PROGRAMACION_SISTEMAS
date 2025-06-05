@@ -3,40 +3,61 @@ import tkinter as tk
 class FrameTipePerson(tk.Frame):
     def __init__(self, master=None, receptor_of_tipo_person: callable = None, **kwargs):
         super().__init__(master, padx=10, pady=10, **kwargs)
-        
-        # Verificando si el parametro "receptor_of_tipo_person" es una funcion
+
         if not callable(receptor_of_tipo_person):
             raise ValueError("El parametro 'receptor_of_tipo_person' tiene que ser una funcion")
 
-        # Para el flujo de datos de 
-        self.selection_tipo = tk.StringVar()
-        
-        # Label y Radiobutton para "Adultos"
-        self.adultos_label = tk.Label(self, text="Adultos")
+        # Variables independientes para cada botón
+        self.adulto_var = tk.BooleanVar(value=False)
+        self.nina_var = tk.BooleanVar(value=False)
+        self.nino_var = tk.BooleanVar(value=False)
+
+        # Función para manejar la selección única
+        def seleccionar(tipo):
+            # Desactiva todos
+            self.adulto_var.set(False)
+            self.nina_var.set(False)
+            self.nino_var.set(False)
+
+            # Activa solo el elegido
+            if tipo == "Adulto":
+                self.adulto_var.set(True)
+            elif tipo == "Niña":
+                self.nina_var.set(True)
+            elif tipo == "Niño":
+                self.nino_var.set(True)
+
+            receptor_of_tipo_person(tipo)
+
+        # Checkbutton para "Adulto"
+        self.adultos_label = tk.Label(self, text="Adulto")
         self.adultos_label.grid(row=0, column=0, padx=5, pady=5, sticky="w")
-        self.adultos_check = tk.Radiobutton(
-            self, variable=self.selection_tipo, 
-            command=lambda: receptor_of_tipo_person("Adulto")
+        self.adultos_check = tk.Checkbutton(
+            self, variable=self.adulto_var,
+            command=lambda: seleccionar("Adulto")
         )
         self.adultos_check.grid(row=0, column=1, padx=5, pady=5)
-        
-        # Label y Radiobutton para "Niñas"
-        self.ninas_label = tk.Label(self, text="Niñas")
+
+        # Checkbutton para "Niña"
+        self.ninas_label = tk.Label(self, text="Niña")
         self.ninas_label.grid(row=1, column=0, padx=5, pady=5, sticky="w")
-        self.ninas_check = tk.Radiobutton(
-            self, variable=self.selection_tipo, 
-            command=lambda: receptor_of_tipo_person("Niñas")
+        self.ninas_check = tk.Checkbutton(
+            self, variable=self.nina_var,
+            command=lambda: seleccionar("Niña")
         )
         self.ninas_check.grid(row=1, column=1, padx=5, pady=5)
-        
-        # Label y Radiobutton para "Niños"
-        self.ninos_label = tk.Label(self, text="Niños")
+
+        # Checkbutton para "Niño"
+        self.ninos_label = tk.Label(self, text="Niño")
         self.ninos_label.grid(row=2, column=0, padx=5, pady=5, sticky="w")
-        self.ninos_check = tk.Radiobutton(
-            self, variable=self.selection_tipo, 
-            command=lambda: receptor_of_tipo_person("Niños")
+        self.ninos_check = tk.Checkbutton(
+            self, variable=self.nino_var,
+            command=lambda: seleccionar("Niño")
         )
         self.ninos_check.grid(row=2, column=1, padx=5, pady=5)
+
+        # NOTA: No se selecciona ninguno al inicio (todas las variables están en False)
+
 
 
 class FrameDatos(tk.Frame):
@@ -78,10 +99,11 @@ class MostrarIMC(tk.Frame):
         self.imc_box = tk.Label(self, text="IMC Calculado", relief="solid", width=20, height=3, justify="center")
         self.imc_box.grid(row=1, column=1, pady=15, padx=5)
 
-    def actualizar_imc(self, tipe_person, valor):
+    def actualizar_imc(self, persona, valor_imc, clasificado_imc):
         """Actualiza el texto mostrado en la caja del IMC"""
-        # self.imc_box.config(text=valor)
+        # self.imc_box.config(text=valor_imc)
         print(f""""
-            Persona: {tipe_person}
-            IMC    : {valor}
+            Persona         : {persona}
+            IMC             : {valor_imc}
+            Clasificado como: {clasificado_imc}
         """)
