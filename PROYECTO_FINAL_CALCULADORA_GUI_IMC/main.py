@@ -4,7 +4,6 @@ import lib.recurso_gui as gui_user
 
 from lib.tool import NucleoPrograma
 from lib import adultos_bbdd, ninas_bbdd, ninos_bbdd
-from lib.cargar_fuente import cargar_fuentes_temporales
 
 
 TABLA_IMC = {
@@ -27,9 +26,6 @@ def notificacion_error(persona, peso, altura):
 
 # Crear el cerebro de toda esta app
 nucleo_process = NucleoPrograma()
-
-# Cargar la fuente que usara este programa
-cargar_fuentes_temporales("fuentes_ttf")
 
 # Crear la ventana principal
 root = tk.Tk()
