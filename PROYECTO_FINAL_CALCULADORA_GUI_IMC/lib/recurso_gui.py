@@ -101,9 +101,9 @@ class MostrarIMC(tk.Frame):
 
     def actualizar_imc(self, persona, valor_imc, clasificado_imc):
         """Actualiza el texto mostrado en la caja del IMC"""
-        # self.imc_box.config(text=valor_imc)
-        print(f""""
-            Persona         : {persona}
-            IMC             : {valor_imc}
-            Clasificado como: {clasificado_imc}
-        """)
+        self.imc_box.config(
+            text=f"{clasificado_imc}"
+        )
+        self.imc_top_label.config(
+            text=f"Cálculo de IMC: {valor_imc}; Para '{persona}'"
+        )
